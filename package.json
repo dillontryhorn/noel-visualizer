@@ -1,0 +1,17 @@
+{
+  "name": "noel-light-show-visualizer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline Three.js assets for the Christmas light show visualizer",
+  "scripts": {
+    "vendor": "node tools/vendor.mjs",
+    "setup": "npm run vendor",
+    "start": "python server.py",
+    "test": "python -m unittest discover -s tests -v && node --test tests/scene_model.test.mjs",
+    "test:scene": "node --test tests/scene_model.test.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  }
+}

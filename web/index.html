@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1019">
+  <title>Noël — Christmas light show studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230e302a'/%3E%3Cpath d='M20 5 8 25h8v9h8v-9h8Z' fill='%237af0c5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/editor.css">
+  <script type="importmap">{"imports":{"three":"/vendor/three/build/three.module.js","three/addons/":"/vendor/three/examples/jsm/"}}</script>
+</head>
+<body>
+  <svg class="svg-defs" aria-hidden="true"><defs>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="m12 2-6 8h3l-5 7h6v5h4v-5h6l-5-7h3Z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 7v6h6M4 13a8 8 0 1 1 2 5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="m9 15 6-6M8 16l-1 1a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0m0 12a4 4 0 0 0 6 0l5-5a4 4 0 0 0-6-6l-1 1"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 2 9 5v10l-9 5-9-5V7Zm0 10L3 7m9 5 9-5m-9 5v10"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 6h5l2-3h4l2 3h5v14H3Z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M8 4l4 4 4-4M8 20l4-4 4 4M3 11l5-1-1-5m10 14-1-5 5-1M3 13l5 1-1 5m10-14-1 5 5 1"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></symbol>
+  </defs></svg>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Noël home"><span class="brand-icon"><svg><use href="#i-tree"/></svg></span><span class="wordmark">noël<span class="brand-caption">LIGHT SHOW STUDIO</span></span></a>
+    <div class="workspace-label"><span class="divider"></span><span>Winter house</span><span class="small-badge">3D PREVIEW</span></div>
+    <div class="header-actions"><span class="connection" id="connection"><i></i> Connecting</span><button class="quiet-button edit-scene-button" id="edit-scene-button">Edit scene</button><button class="quiet-button" id="help-button"><svg><use href="#i-info"/></svg><span>Setup guide</span></button></div>
+  </header>
+  <main class="workspace">
+    <aside class="control-panel">
+      <div class="panel-heading"><span class="eyebrow">SHOW CONTROLS</span><span class="tiny-dot"></span></div>
+      <h1>A little winter magic.</h1><p class="subtitle">Design in light. Preview in real time.</p>
+      <section class="control-section">
+        <label class="section-label">Input source</label>
+        <div class="segmented source-switch" role="group" aria-label="Input source"><button class="active" id="demo-source" aria-pressed="true">Demo show</button><button id="live-source" aria-pressed="false"><svg><use href="#i-link"/></svg>Live input</button></div>
+        <p class="field-hint" id="source-hint">A ready-to-play show. No hardware needed.</p>
+        <div class="live-details" id="live-details" hidden><span>Send xLights output to <strong id="live-host">127.0.0.1</strong></span><span>DDP <b id="ddp-port">4048</b> · sACN <b id="sacn-port">5568</b></span><span id="live-age">Waiting for your first frame</span></div>
+      </section>
+      <section class="control-section" id="effects-section">
+        <div class="section-label-row"><label class="section-label">Effect library</label><span class="count-label">06</span></div>
+        <div class="effect-grid" id="effect-grid">
+          <button class="effect-card selected" data-effect="aurora" aria-pressed="true"><span class="effect-preview aurora"></span><span>Aurora<span class="effect-description">Cool &amp; luminous</span></span><span class="selection-dot"></span></button>
+          <button class="effect-card" data-effect="candy" aria-pressed="false"><span class="effect-preview candy"></span><span>Candy cane<span class="effect-description">A Christmas classic</span></span><span class="selection-dot"></span></button>
+          <button class="effect-card" data-effect="rainbow" aria-pressed="false"><span class="effect-preview rainbow"></span><span>Spectrum<span class="effect-description">Every color, in motion</span></span><span class="selection-dot"></span></button>
+          <button class="effect-card" data-effect="sparkle" aria-pressed="false"><span class="effect-preview sparkle"></span><span>Starlight<span class="effect-description">Warm little moments</span></span><span class="selection-dot"></span></button>
+          <button class="effect-card" data-effect="solid" aria-pressed="false"><span class="effect-preview solid"></span><span>Warm white<span class="effect-description">Quiet &amp; timeless</span></span><span class="selection-dot"></span></button>
+          <button class="effect-card" data-effect="blackout" aria-pressed="false"><span class="effect-preview blackout"></span><span>Blackout<span class="effect-description">All channels off</span></span><span class="selection-dot"></span></button>
+        </div>
+      </section>
+      <section class="control-section sliders">
+        <div class="section-label-row"><label for="brightness" class="section-label">Master brightness</label><output id="brightness-value">80%</output></div>
+        <input id="brightness" type="range" min="0" max="100" value="80" aria-label="Master brightness">
+        <div class="range-labels"><span>Subtle</span><span>Brilliant</span></div>
+        <div class="section-label-row speed-label"><label for="speed" class="section-label">Playback speed</label><output id="speed-value">1.0×</output></div>
+        <input id="speed" type="range" min="25" max="300" value="100" step="5" aria-label="Playback speed">
+        <div class="bpm-row"><label for="bpm">Tempo</label><div class="number-input"><input id="bpm" type="number" min="40" max="240" value="120" aria-label="Tempo in beats per minute"><span>BPM</span></div></div>
+      </section>
+      <section class="bridge-card"><div class="bridge-top"><span class="bridge-icon"><svg><use href="#i-cube"/></svg></span><div><strong>Unreal Engine bridge</strong><span id="relay-address">127.0.0.1 : 4049</span></div><label class="toggle"><input type="checkbox" id="relay-toggle" checked aria-label="Enable Unreal Engine relay"><span></span></label></div><div class="bridge-status"><i id="relay-dot"></i><span id="relay-status">Sending the same RGB frames</span></div></section>
+      <p class="powered-by">Built with Three.js <span>·</span> xLights compatible</p>
+    </aside>
+    <section class="stage-column" aria-label="Light show preview">
+      <div class="stage-toolbar"><div><span class="eyebrow">THE PREVIEW</span><span class="stage-title">Winter house<span class="muted"> / </span>Night scene</span></div><div class="stage-toolbar-right"><span class="mode-badge" id="mode-badge"><i></i> DEMO</span><button class="icon-button" id="capture-button" title="Save preview image" aria-label="Save preview image"><svg><use href="#i-camera"/></svg></button></div></div>
+      <div id="scene-container" class="scene-container"><div class="scene-loading" id="scene-loading"><span class="loading-tree">✦</span><strong>Setting the scene</strong><span>Warming up the winter lights…</span></div><div class="scene-top"><span class="scene-tag"><i></i> REAL-TIME 3D</span><div class="view-switch" role="group" aria-label="Camera view"><button data-view="perspective" class="active" aria-pressed="true">Perspective</button><button data-view="front" aria-pressed="false">Front</button><button data-view="top" aria-pressed="false">Top</button></div></div><div class="scene-bottom"><span class="orbit-hint"><span>↔</span> Drag to orbit <b>·</b> Scroll to zoom</span><div class="scene-tools"><button id="snow-button" class="icon-button active" title="Toggle snowfall" aria-pressed="true" aria-label="Toggle snowfall"><svg><use href="#i-snow"/></svg></button><button id="glow-button" class="icon-button active" title="Toggle light glow" aria-pressed="true" aria-label="Toggle light glow"><svg><use href="#i-sun"/></svg></button><button id="camera-reset" class="icon-button" title="Reset camera" aria-label="Reset camera"><svg><use href="#i-reset"/></svg></button></div></div><div class="selected-fixture" id="selected-fixture" hidden></div></div>
+      <div class="transport">
+        <div class="transport-top"><div class="now-playing"><span class="album-art aurora" id="album-art">✦</span><div><span class="eyebrow" id="transport-label">NOW PLAYING</span><strong id="effect-title">Aurora</strong></div></div><div class="playback-buttons"><button id="restart-button" class="icon-button" title="Restart show" aria-label="Restart show"><svg><use href="#i-reset"/></svg></button><button id="play-button" class="play-button" aria-label="Pause show"><svg><use href="#i-pause"/></svg></button><span class="loop-label" title="Demo loops every 120 seconds">↻ <span>LOOP</span></span></div><div class="time-readout"><span id="current-time">00:00</span><span class="muted"> / </span><span id="duration">02:00</span></div></div>
+        <div class="timeline" id="timeline"><div class="timeline-track"><span class="clip clip-one"></span><span class="clip clip-two"></span><span class="clip clip-three"></span><span class="clip clip-four"></span><span class="clip clip-five"></span><span class="clip clip-six"></span></div><input id="seek" type="range" min="0" max="120" step="0.1" value="0" aria-label="Show position in seconds"><div class="timeline-playhead" id="playhead"></div></div>
+        <div class="timeline-labels"><span>0:00</span><span>0:30</span><span>1:00</span><span>1:30</span><span>2:00</span></div>
+        <div class="transport-footer"><span><i class="tiny-dot"></i> <span id="frame-status">30 FPS output</span></span><span id="channel-status">RGB · 8-bit channels</span></div>
+      </div>
+    </section>
+    <aside class="fixture-panel">
+      <div class="panel-heading"><span class="eyebrow">DISPLAY PATCH</span><button id="download-layout" class="icon-button" title="Download layout JSON" aria-label="Download layout JSON"><svg><use href="#i-download"/></svg></button></div>
+      <div class="patch-summary"><strong id="pixel-count">—</strong><span>RGB pixels</span><span class="patch-universe" id="universe-count">— universes</span></div>
+      <div class="fixture-list" id="fixture-list"></div>
+      <div class="selection-info" id="selection-info"><span class="eyebrow">YOUR VIRTUAL DISPLAY</span><p>Every dot is an individually addressed RGB pixel.</p><p class="muted">Select a fixture to inspect its channel patch.</p></div>
+      <div class="network-card"><div class="section-label-row"><span class="section-label">Network monitor</span><span id="network-badge" class="small-badge">IDLE</span></div><div class="network-row"><span><i class="protocol-dot ddp"></i>DDP</span><strong id="ddp-packets">0<span> packets</span></strong></div><div class="network-row"><span><i class="protocol-dot sacn"></i>sACN / E1.31</span><strong id="sacn-packets">0<span> packets</span></strong></div><div class="network-note" id="network-note">Ready for a local sequencer.</div></div>
+      <button class="setup-card" id="setup-card"><span class="setup-icon"><svg><use href="#i-link"/></svg></span><span>Connect your show<span>xLights → your virtual display</span></span><svg><use href="#i-chevron"/></svg></button>
+    </aside>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <dialog id="help-dialog"><div class="dialog-header"><div><span class="eyebrow">FROM SEQUENCER TO SCENE</span><h2>Bring your show to life.</h2></div><button class="icon-button" id="close-help" aria-label="Close setup guide"><svg><use href="#i-close"/></svg></button></div><p>No physical controller is needed. This preview receives the RGB channel data that xLights sends to lights.</p><ol class="setup-steps"><li><span>01</span><div><strong>Patch your display</strong><p>Use the fixture channel ranges in the Display Patch panel. Import the generated custom models in the <code>xlights/</code> folder, or map your own RGB models to the same channels.</p></div></li><li><span>02</span><div><strong>Add an Ethernet controller in xLights</strong><p>Choose <b>DDP</b>, set IP to <code id="help-host">127.0.0.1</code>, and set Channels to <code id="help-channels">—</code>. Keep channel numbering starting at 1. The receiver uses UDP <code id="help-ddp">4048</code>.</p><p>For <b>E1.31</b>, use unicast, start universe <code id="help-universe">1</code>, <code id="help-universe-count">—</code> universes and <code id="help-universe-size">510</code> channels per universe.</p></div></li><li><span>03</span><div><strong>Switch to Live input</strong><p>Enable <b>Output to Lights</b> in xLights, then play your sequence. The network monitor counts received packets. Disable frame sync for this preview.</p></div></li><li><span>04</span><div><strong>Test it in Unreal Engine</strong><p>Open <code>unreal/ChristmasLights/ChristmasLights.uproject</code> after following its README and running the asset setup. Press Play. The bridge forwards the same RGB frames to UDP <code id="help-relay">4049</code>.</p></div></li></ol><div class="dialog-note">Quick network test: <code>python tools/send_test.py --protocol ddp</code><br><span>Use Live input to view the sender. Stop it with Ctrl+C.</span></div><div class="dialog-footer"><a href="https://manual.xlights.org/xlights/chapters/chapter-four-set-up/lighting-networks/ethernet-controller" target="_blank" rel="noreferrer">xLights controller documentation ↗</a><button class="primary-button" id="help-done">Got it</button></div></dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+node_modules/
+.npm-cache/
+*.log
+.DS_Store
+.idea/
+.vscode/
+# Unreal regenerates these folders and IDE project files.
+unreal/**/Binaries/
+unreal/**/DerivedDataCache/
+unreal/**/Intermediate/
+unreal/**/Saved/
+unreal/**/*.sln
+unreal/**/*.suo
+unreal/**/*.opensdf
+unreal/**/*.sdf
+unreal/**/*.VC.db
+unreal/**/*.vcxproj
+unreal/**/*.vcxproj.filters
+unreal/**/*.vcxproj.user
+unreal/**/.vs/

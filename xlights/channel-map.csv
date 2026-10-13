@@ -1,0 +1,11 @@
+fixture_id,name,pixels,start_channel,end_channel,ddp_offset_bytes,start_universe,start_slot,end_universe,end_slot,channels_per_universe
+roofline,House roofline,242,1,726,0,1,1,2,216,510
+windows,Window frames,128,727,1110,726,2,217,3,90,510
+door,Entryway,73,1111,1329,1110,3,91,3,309,510
+megatree,16-strand mega tree,512,1330,2865,1329,3,310,6,315,510
+star,Tree topper,50,2866,3015,2865,6,316,6,465,510
+mini-left,Mini tree left,72,3016,3231,3015,6,466,7,171,510
+mini-center,Mini tree center,72,3232,3447,3231,7,172,7,387,510
+mini-right,Mini tree right,72,3448,3663,3447,7,388,8,93,510
+arches,Three leaping arches,120,3664,4023,3663,8,94,8,453,510
+path,Walkway lights,84,4024,4275,4023,8,454,9,195,510
